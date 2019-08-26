@@ -1,0 +1,76 @@
+table {
+    width: 100%;
+  }
+  
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: #777;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+  }
+  
+  .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  .example-element-description-attribution {
+    opacity: 0.5;
+  }
+
+  .stations_table .mat-icon{
+    transform: rotate(90deg);
+  }
+
+  .stations_table .expanded .mat-icon{
+    transform: rotate(270deg);
+  }
+
+  .detail-row {
+    padding: 30px;
+    background-color: #f1f1f1;
+    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.example-full-width{
+  width: 100%;
+}
+
+.example-full-width.mat-form-field-appearance-legacy .mat-form-field-wrapper{
+  max-width: 200px;
+}
+
+
+mat-cell.chevy {
+  justify-content: flex-end;
+}
