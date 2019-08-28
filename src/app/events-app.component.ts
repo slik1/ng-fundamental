@@ -13,6 +13,7 @@ export class EventsAppComponent {
 
   ngOnInit(){
     this.auth.checkAuthenticationStatus();
+    console.log('events-app.component ngOnInit fired!');
   }
 
 }

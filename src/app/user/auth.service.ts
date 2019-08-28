@@ -24,17 +24,19 @@ export class AuthService{
         //I just want to make a side effect
         // And I can make a side effect by piping in a special RxJS operator called tap
 
-        // tap - is a way to tap into the scream and take an action when a piece of data comes through the observable
+        // tap - is a way to tap into the stream and take an action when a piece of data comes through the observable
 
         // we are not manipulating the value in any way, so we don't want to do something like .map, we want to use the tap method.
         // it let's us just see the value that comes through and we can take an action if want based on that value, but we're
         // not manipulating what's going through the observable stream!
 
-        return this.http.post('/api/login', loginInfo, options).pipe(tap(data => {
-            this.currentUser = <IUser>data['user']; // casts user property of data object to an IUser
-        })).pipe(catchError(err => {
-            return of(false);
-        }))
+        return this.http.post('/api/login', loginInfo, options)
+            .pipe(tap(data => {
+                this.currentUser = <IUser>data['user']; // casts user property of data object to an IUser
+            }))
+            .pipe(catchError(err => {
+                return of(false);
+            }))
 
         // this.currentUser = {
         //     id: 1,
@@ -44,6 +46,9 @@ export class AuthService{
         // }
     }
 
+
+
+
     isAuthenticated(){
         return !!this.currentUser;
     }
@@ -51,23 +56,37 @@ export class AuthService{
 
     checkAuthenticationStatus(){
         this.http.get('/api/currentIdentity')
-        .pipe(tap(data => {
+        // .pipe(tap(data => {
+        //     if(data instanceof Object){
+        //         this.currentUser = <IUser>data;
+        //         console.log(this.currentUser);
+        //     }
+        // }
+        // ));
+        
+        .subscribe(data => {
             if(data instanceof Object){
                 this.currentUser = <IUser>data;
             }
-        }
-        ))
-        // .subscribe(data => {
-        //     if(data instanceof Object){
-        //         this.currentUser = <IUser>data;
-        //     }
-        // })
+        })
     }
 
 
     updateCurrentUser(firstName:string, lastName:string){
         this.currentUser.firstName = firstName;
         this.currentUser.lastName = lastName;
+
+        let options = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+
+        return this.http.put(`/api/users/${this.currentUser.id}`, this.currentUser, options);
+
+    }
+
+
+    logout(){
+        this.currentUser = undefined;
+        let options = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+        return this.http.post('/api/logout', {}, options);
     }
 
 
